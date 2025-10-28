@@ -1,0 +1,70 @@
+/* Reset CSS dasar */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f0f2f5;
+    /* Mencegah scrolling */
+    overflow: hidden; 
+}
+
+/* * Kontainer utama untuk gambar.
+ * Kita gunakan Flexbox untuk membuatnya full-screen dan menengahkan gambar.
+*/
+.image-container {
+    width: 100vw; /* 100% lebar viewport */
+    height: 95vh; /* 95% tinggi viewport (sisakan 5% untuk footer) */
+    display: flex;
+    justify-content: center; /* Tengah horizontal */
+    align-items: center; /* Tengah vertikal */
+    padding: 20px;
+    box-sizing: border-box; /* Agar padding tidak menambah ukuran */
+}
+
+/* * Aturan untuk gambar di dalamnya.
+ * Ini akan memastikan gambar pas di dalam kontainer tanpa terdistorsi.
+*/
+#nfc-image {
+    max-width: 100%;  /* Maksimal selebar kontainer */
+    max-height: 100%; /* Maksimal setinggi kontainer */
+    height: auto;
+    width: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    /* Transisi halus saat gambar berganti */
+    transition: transform 0.3s ease; 
+}
+
+/* Animasi kecil saat gambar baru muncul */
+#nfc-image:active {
+    transform: scale(0.98);
+}
+
+/* * Footer untuk status (dibuat kecil di bawah).
+*/
+footer {
+    width: 100%;
+    height: 5vh; /* 5% tinggi viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9em;
+    color: #888;
+}
+
+#status-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 5px 0 10px;
+}
+#status-indicator.disconnected { background-color: #e74c3c; }
+#status-indicator.connected { background-color: #2ecc71; }
+
+#uid-text {
+    font-family: "Courier New", Courier, monospace;
+}
