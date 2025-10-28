@@ -7,44 +7,42 @@ html, body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: #f0f2f5;
     /* Mencegah scrolling */
-    overflow: hidden; 
+    overflow: hidden;
 }
 
-/* * Kontainer utama untuk gambar.
- * Kita gunakan Flexbox untuk membuatnya full-screen dan menengahkan gambar.
-*/
+/* Kontainer utama untuk gambar */
 .image-container {
     width: 100vw; /* 100% lebar viewport */
-    height: 95vh; /* 95% tinggi viewport (sisakan 5% untuk footer) */
+    height: 95vh; /* 95% tinggi viewport */
     display: flex;
     justify-content: center; /* Tengah horizontal */
     align-items: center; /* Tengah vertikal */
     padding: 20px;
-    box-sizing: border-box; /* Agar padding tidak menambah ukuran */
+    box-sizing: border-box;
 }
 
-/* * Aturan untuk gambar di dalamnya.
- * Ini akan memastikan gambar pas di dalam kontainer tanpa terdistorsi.
-*/
+/* Aturan untuk gambar */
 #nfc-image {
-    max-width: 100%;  /* Maksimal selebar kontainer */
-    max-height: 100%; /* Maksimal setinggi kontainer */
+    max-width: 100%;
+    max-height: 100%;
     height: auto;
     width: auto;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
-    /* Transisi halus saat gambar berganti */
-    transition: transform 0.3s ease; 
+
+    /* --- EFEK FADE --- */
+    opacity: 1; /* Mulai dengan terlihat */
+    transition: opacity 0.5s ease-in-out; /* Transisi opacity selama 0.5 detik */
 }
 
-/* Animasi kecil saat gambar baru muncul */
-#nfc-image:active {
-    transform: scale(0.98);
+/* --- Class untuk menyembunyikan gambar saat transisi --- */
+#nfc-image.fade-out {
+    opacity: 0;
 }
 
-/* * Footer untuk status (dibuat kecil di bawah).
-*/
+
+/* Footer untuk status */
 footer {
     width: 100%;
     height: 5vh; /* 5% tinggi viewport */
@@ -52,19 +50,36 @@ footer {
     justify-content: center;
     align-items: center;
     font-size: 0.9em;
-    color: #888;
+    color: #555; /* Warna lebih jelas */
+    background-color: #e9ecef; /* Latar belakang footer sedikit beda */
+    border-top: 1px solid #dee2e6;
+    box-sizing: border-box;
 }
 
 #status-indicator {
     display: inline-block;
-    width: 10px;
-    height: 10px;
+    width: 12px; /* Sedikit lebih besar */
+    height: 12px;
     border-radius: 50%;
     margin: 0 5px 0 10px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transisi warna dan shadow */
 }
-#status-indicator.disconnected { background-color: #e74c3c; }
-#status-indicator.connected { background-color: #2ecc71; }
+#status-indicator.disconnected {
+    background-color: #dc3545; /* Merah lebih terang */
+    box-shadow: 0 0 5px #dc3545; /* Tambah glow merah */
+ }
+#status-indicator.connected {
+    background-color: #28a745; /* Hijau lebih terang */
+    box-shadow: 0 0 5px #28a745; /* Tambah glow hijau */
+}
 
 #uid-text {
     font-family: "Courier New", Courier, monospace;
+    margin-left: 10px; /* Jarak dari status */
+    /* Mencegah teks terlalu panjang memakan tempat */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px; /* Batasi lebar teks UID */
 }
+
