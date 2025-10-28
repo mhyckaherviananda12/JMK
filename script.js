@@ -8,6 +8,31 @@ const statusIndicator = document.getElementById('status-indicator');
 const uidText = document.getElementById('uid-text');
 const nfcImage = document.getElementById('nfc-image');
 
+// --- 💡 TAMBAHAN UNTUK PRELOADING "NO DELAY" ---
+const netlifyBaseUrl = "https://aac-job.netlify.app"; // URL Netlify Anda
+const imagesToPreload = [
+    "/gambar1.jpg",
+    "/gambar2.jpg",
+    "/gambar3.jpg",
+    "/default.jpg"
+    // Tambahkan gambar lain di sini jika ada (misal: "/gambar4.jpg")
+];
+
+/**
+ * Mengunduh semua gambar ke cache browser di latar belakang.
+ */
+function preloadImages() {
+    console.log("Mulai preloading gambar...");
+    imagesToPreload.forEach(imgUrl => {
+        const img = new Image(); // Buat elemen gambar baru
+        img.src = netlifyBaseUrl + imgUrl; // Set sumbernya
+        img.onload = () => console.log(`Gambar ${imgUrl} berhasil dimuat.`);
+        img.onerror = () => console.error(`Gagal memuat ${imgUrl}.`);
+    });
+}
+// --- AKHIR TAMBAHAN ---
+
+
 // Fungsi untuk memulai koneksi WebSocket
 function initWebSocket() {
     console.log('Mencoba membuka WebSocket...');
@@ -54,9 +79,13 @@ function onMessage(event) {
     
     if (data.image) {
         // Langsung gunakan URL lengkap dari JSON
+        // Ini akan instan karena gambar sudah ada di cache
         nfcImage.src = data.image; 
     }
 }
 
 // Mulai koneksi saat halaman dimuat
-window.addEventListener('load', initWebSocket);
+window.addEventListener('load', () => {
+    initWebSocket();
+    preloadImages(); // 💡 Panggil fungsi preload saat halaman dimuat
+});
